@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<!--
+  Laboratorio Interactivo de Análisis Numérico
+  Proyecto académico para Ingeniería de Sistemas - Universidad Simón Bolívar, sede Cúcuta.
+  Archivo principal de la interfaz web. Aquí se definen las vistas/módulos que serán controlados desde app.js.
+-->
+<html lang="es">
+<head>
+  <!-- Metadatos base para correcta visualización en navegadores y dispositivos móviles -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Laboratorio Virtual de Análisis Numérico · Versión 2.0</title>
+  <!-- Hoja de estilos principal del proyecto -->
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="edo.css" />
+  <!-- Configuración de MathJax para renderizar fórmulas escritas en LaTeX dentro de la página -->
+  <script>
+    window.MathJax = {
+      tex: { inlineMath: [['\\(', '\\)'], ['$', '$']], displayMath: [['\\[', '\\]']] },
+      svg: { fontCache: 'global' }
+    };
+  </script>
+  <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+</head>
+<body>
+  <!-- Encabezado general: marca del laboratorio, navegación y presentación principal -->
+  <header class="hero">
+    <div class="hero-grid"></div>
+    <!-- Barra superior con identidad del proyecto y botones de navegación por módulos -->
+    <nav class="topbar">
+      <div class="brand">
+        <span class="logo-mark">∑</span>
+        <div>
+          <strong>Laboratorio Interactivo</strong>
+          <small>Ingeniería de Sistemas · Sede Cúcuta · Versión 2.0</small>
+        </div>
+        <img src="https://www.unisimon.edu.co/showimagen/showpdf/centrodocumentos/20231121155455_0.png" alt="Logo original verde Universidad Simón Bolívar" class="brand-university-logo" onerror="this.style.display='none'" />
+      </div>
+      <!-- Cada botón usa data-view para indicar qué sección debe mostrarse. app.js lee ese atributo. -->
+      <div class="module-nav" aria-label="Navegación por módulos">
+        <button type="button" class="nav-pill is-active" data-view="guia">Inicio</button>
+        <button type="button" class="nav-pill" data-view="lagrange">Lagrange</button>
+        <button type="button" class="nav-pill" data-view="lineal">Lineal</button>
+        <button type="button" class="nav-pill" data-view="falsa">Falsa posición</button>
+        <button type="button" class="nav-pill" data-view="minimos">Mínimos</button>
+        <button type="button" class="nav-pill" data-view="regresion">Regresión</button>
+        <button type="button" class="nav-pill" data-view="edo">Euler · Heun · RK4</button>
+        <button type="button" class="nav-pill" data-view="convergencia">Convergencia</button>
+        <button type="button" class="nav-pill" data-view="sistemas">Sistemas EDO</button>
+        <button type="button" class="nav-pill" data-view="acerca">Acerca de</button>
+      </div>
+    </nav>
+    <!-- Bloque de bienvenida: explica el propósito del laboratorio y muestra una fórmula representativa -->
+    <section class="hero-content">
+      <div>
+        <p class="eyebrow">Recurso educativo interactivo · OVA · Versión 2.0</p>
+        <h1>Explora, calcula y comprende los métodos numéricos.</h1>
+        <p class="lead">Resuelve métodos clásicos de interpolación, raíces y regresión. Ahora incluye modelación de problemas de valor inicial, Euler, Euler mejorado, Heun, Runge-Kutta, convergencia y sistemas de ecuaciones diferenciales.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn primary" data-view="edo">Explorar ecuaciones diferenciales</button>
+          <button type="button" class="btn secondary" data-view="guia">Ver módulos</button>
+        </div>
+      </div>
+      <aside class="formula-card">
+        <span class="tag">Método destacado · Runge-Kutta de cuarto orden</span>
+        <div class="math-display">\[y_{n+1}=y_n+\frac{h}{6}(k_1+2k_2+2k_3+k_4)\]</div>
+        <p>Simula, consulta las pendientes de cada paso y contrasta soluciones aproximadas con gráficas. Proyecto académico independiente.</p>
+      </aside>
+    </section>
+  </header>
+
+  <main>
+    <!-- Vista de inicio: guía pedagógica y tarjetas de acceso a cada módulo -->
+    <section id="guia" class="section guide view is-active">
+      <div class="section-title">
+        <p class="eyebrow">Diseño pedagógico</p>
+        <h2>Cómo usar el laboratorio en clase</h2>
+        <p>La idea no es memorizar fórmulas, sino observar cómo el método transforma datos iniciales en una respuesta numérica verificable.</p>
+      </div>
+      <div class="guide-grid">
+        <article class="mini-card">
+          <span>1</span>
+          <h3>Explorar</h3>
+          <p>El estudiante cambia datos, intervalos o funciones para observar qué condiciones se cumplen antes de resolver.</p>
+        </article>
+        <article class="mini-card">
+          <span>2</span>
+          <h3>Calcular</h3>
+          <p>La web muestra fórmulas, sustituciones, ciclos, sumatorias, matrices y tablas de iteración.</p>
+        </article>
+        <article class="mini-card">
+          <span>3</span>
+          <h3>Interpretar</h3>
+          <p>Cada resultado incluye una conclusión sencilla para relacionar el cálculo con el significado del método.</p>
+        </article>
+      </div>
+      <div class="selector-heading">
+        <p class="eyebrow">Módulos disponibles</p>
+        <h3>Selecciona un método para experimentar</h3>
+        <p>Cada módulo presenta una actividad interactiva con datos de entrada, desarrollo matemático, visualización gráfica e interpretación del resultado.</p>
+      </div>
+      <!-- Tarjetas de selección rápida. Cada tarjeta abre una vista independiente usando data-view. -->
+      <div class="selector-grid">
+        <article class="module-card">
+          <span class="module-number">01</span>
+          <h3>Interpolación de Lagrange</h3>
+          <p>Construcción de bases, polinomio interpolador y evaluación.</p>
+          <button type="button" data-view="lagrange">Abrir módulo</button>
+        </article>
+        <article class="module-card">
+          <span class="module-number">02</span>
+          <h3>Interpolación lineal</h3>
+          <p>Estimación entre dos puntos y cálculo de error porcentual.</p>
+          <button type="button" data-view="lineal">Abrir módulo</button>
+        </article>
+        <article class="module-card">
+          <span class="module-number">03</span>
+          <h3>Falsa posición</h3>
+          <p>Raíces por intervalos, iteraciones, actualización y error.</p>
+          <button type="button" data-view="falsa">Abrir módulo</button>
+        </article>
+        <article class="module-card">
+          <span class="module-number">04</span>
+          <h3>Mínimos cuadrados</h3>
+          <p>Ajuste polinomial usando sistema normal y residuos.</p>
+          <button type="button" data-view="minimos">Abrir módulo</button>
+        </article>
+        <article class="module-card">
+          <span class="module-number">05</span>
+          <h3>Regresión lineal</h3>
+          <p>Pendiente, intercepto, correlación y determinación.</p>
+          <button type="button" data-view="regresion">Abrir módulo</button>
+        </article>
+        <article class="module-card new-module">
+          <span class="module-number">06</span>
+          <h3>Euler, Heun y Runge-Kutta</h3>
+          <p>Resuelve PVI, modelación y balances de conservación con cuatro métodos.</p>
+          <button type="button" data-view="edo">Abrir módulo</button>
+        </article>
+        <article class="module-card new-module">
+          <span class="module-number">07</span>
+          <h3>Convergencia y estabilidad</h3>
+          <p>Compara h, h/2 y h/4, errores y factores de amplificación.</p>
+          <button type="button" data-view="convergencia">Abrir módulo</button>
+        </article>
+        <article class="module-card new-module">
+          <span class="module-number">08</span>
+          <h3>Sistemas de EDO</h3>
+          <p>Resuelve simultáneamente dos ecuaciones diferenciales con Euler, Heun o RK4.</p>
+          <button type="button" data-view="sistemas">Abrir módulo</button>
+        </article>
+        <article class="module-card about-card-highlight">
+          <span class="module-number">09</span>
+          <h3>Acerca de</h3>
+          <p>Información del docente, del estudiante, del curso y propósito de la web educativa.</p>
+          <button type="button" data-view="acerca">Abrir módulo</button>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 1: Interpolación de Lagrange -->
+    <section id="lagrange" class="lab-section view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 1</p>
+          <h2>Interpolación de Lagrange</h2>
+          <p>Construye el polinomio interpolador a partir de puntos \((x_i,y_i)\) y visualiza cada base \(L_i(x)\).</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(P(x)=\sum y_iL_i(x)\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <!-- Panel izquierdo: datos que ingresa el usuario para ejecutar el método -->
+        <aside class="input-panel">
+          <h3>Entrada de datos</h3>
+          <label>Puntos \((x,y)\). Usa una línea por punto:</label>
+          <textarea id="lagrangePoints" rows="6">0;1
+1;3
+2;0</textarea>
+          <label>Valor a evaluar \(x\) opcional:</label>
+          <input id="lagrangeEval" type="text" value="1.5" />
+          <div class="button-row">
+            <button onclick="runLagrange()">Resolver Lagrange</button>
+            <button class="ghost" onclick="loadExample('lagrange-libro')">Ejemplo t-v</button>
+          </div>
+          <p class="hint">Tip: puedes pegar datos como <code>1;800</code>, <code>3;2310</code>, etc.</p>
+        </aside>
+        <!-- Panel derecho: resultados, procedimiento matemático y gráfica generados por JavaScript -->
+        <article class="output-panel">
+          <div id="lagrangeOutput" class="output"></div>
+          <canvas id="lagrangeCanvas" width="800" height="360" class="plot"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 2: Interpolación lineal y cálculo de error porcentual -->
+    <section id="lineal" class="lab-section alt view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 2</p>
+          <h2>Interpolación lineal y error porcentual</h2>
+          <p>Permite estimar un valor entre dos puntos y comparar contra un valor real si se conoce.</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(f(x)=f(x_0)+\frac{f(x_1)-f(x_0)}{x_1-x_0}(x-x_0)\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid compact">
+        <!-- Panel izquierdo: datos que ingresa el usuario para ejecutar el método -->
+        <aside class="input-panel">
+          <h3>Entrada de datos</h3>
+          <div class="two-col">
+            <label>\(x_0\)<input id="linX0" value="9" /></label>
+            <label>\(f(x_0)\)<input id="linY0" value="0.9542425" /></label>
+            <label>\(x_1\)<input id="linX1" value="11" /></label>
+            <label>\(f(x_1)\)<input id="linY1" value="1.0413927" /></label>
+            <label>\(x\) a estimar<input id="linX" value="10" /></label>
+            <label>Valor real opcional<input id="linReal" value="1" /></label>
+          </div>
+          <div class="button-row">
+            <button onclick="runLinearInterpolation()">Calcular interpolación</button>
+            <button class="ghost" onclick="loadExample('linear-log')">Ejemplo log(10)</button>
+          </div>
+        </aside>
+        <!-- Panel derecho: resultado estimado, error y gráfica de interpolación lineal -->
+        <article class="output-panel">
+          <div id="linearOutput" class="output"></div>
+          <canvas id="linearCanvas" width="800" height="320" class="plot"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 3: Método de falsa posición para aproximación de raíces -->
+    <section id="falsa" class="lab-section view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 3</p>
+          <h2>Método de Falsa Posición</h2>
+          <p>Analiza intervalos, calcula \(x_r\), actualiza los extremos y detiene por iteraciones o por error.</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(x_r=b-\frac{f(b)(a-b)}{f(a)-f(b)}\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <!-- Panel izquierdo: datos que ingresa el usuario para ejecutar el método -->
+        <aside class="input-panel">
+          <h3>Entrada de datos</h3>
+          <label>Función \(f(x)\)</label>
+          <input id="falseFunc" value="x^3 - x - 2" />
+          <div class="two-col">
+            <label>Extremo \(a\)<input id="falseA" value="1" /></label>
+            <label>Extremo \(b\)<input id="falseB" value="2" /></label>
+            <label>Iteraciones máximas<input id="falseIter" value="3" /></label>
+            <label>Error máximo %<input id="falseTol" value="" placeholder="ej. 5" /></label>
+          </div>
+          <div class="button-row">
+            <button onclick="runFalsePosition()">Resolver falsa posición</button>
+            <button class="ghost" onclick="loadExample('false-exp')">Ejemplo exp(-x)-x</button>
+          </div>
+          <p class="hint">Funciones permitidas: <code>exp</code>, <code>sin</code>, <code>cos</code>, <code>tan</code>, <code>log</code>, <code>sqrt</code>, <code>abs</code>, <code>pi</code>, <code>e</code>.</p>
+        </aside>
+        <!-- Panel derecho: tabla de iteraciones, raíz aproximada y gráfica de la función -->
+        <article class="output-panel">
+          <div id="falseOutput" class="output"></div>
+          <canvas id="falseCanvas" width="800" height="360" class="plot"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 4: Aproximación polinomial por mínimos cuadrados -->
+    <section id="minimos" class="lab-section alt view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 4</p>
+          <h2>Aproximación polinomial por mínimos cuadrados</h2>
+          <p>Ajusta un polinomio \(p(x)=a_0+a_1x+...+a_mx^m\) minimizando el error cuadrático global.</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(A^TAc=A^Ty\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <!-- Panel izquierdo: datos que ingresa el usuario para ejecutar el método -->
+        <aside class="input-panel">
+          <h3>Entrada de datos</h3>
+          <label>Puntos experimentales</label>
+          <textarea id="leastPoints" rows="6">1;1.5
+2;3.2
+3;6.8
+4;12.1</textarea>
+          <label>Grado del polinomio</label>
+          <input id="leastDegree" value="2" />
+          <div class="button-row">
+            <button onclick="runLeastSquares()">Ajustar polinomio</button>
+            <button class="ghost" onclick="loadExample('least-quadratic')">Ejemplo cuadrático</button>
+          </div>
+        </aside>
+        <!-- Panel derecho: sistema normal, polinomio ajustado, residuos y gráfica -->
+        <article class="output-panel">
+          <div id="leastOutput" class="output"></div>
+          <canvas id="leastCanvas" width="800" height="360" class="plot"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 5: Regresión lineal, correlación y determinación -->
+    <section id="regresion" class="lab-section view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 5</p>
+          <h2>Regresión lineal, correlación y determinación</h2>
+          <p>Calcula sumatorias, pendiente, intercepto, ecuación de la recta, \(r\) y \(R^2\).</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(y=ax+b\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <!-- Panel izquierdo: datos que ingresa el usuario para ejecutar el método -->
+        <aside class="input-panel">
+          <h3>Entrada de datos</h3>
+          <label>Puntos \((x,y)\)</label>
+          <textarea id="regPoints" rows="6">1;2.1
+2;3.9
+3;6.2
+4;7.8</textarea>
+          <div class="button-row">
+            <button onclick="runRegression()">Calcular regresión</button>
+            <button class="ghost" onclick="loadExample('reg-growth')">Ejemplo crecimiento</button>
+          </div>
+        </aside>
+        <!-- Panel derecho: sumatorias, modelo lineal, indicadores estadísticos y gráfica -->
+        <article class="output-panel">
+          <div id="regOutput" class="output"></div>
+          <canvas id="regCanvas" width="800" height="360" class="plot"></canvas>
+        </article>
+      </div>
+    </section>
+
+
+    <!-- Módulo 6: formulación de PVI, modelación, conservación y métodos numéricos -->
+    <section id="edo" class="lab-section view">
+      <div class="lab-header">
+        <div>
+          <p class="eyebrow">Módulo 6 · Modelación y problemas de valor inicial</p>
+          <h2>Euler, Euler mejorado, Heun y Runge-Kutta</h2>
+          <p>Formula y resuelve el PVI \(y'=f(x,y),\;y(x_0)=y_0\). Elige un modelo aplicado o escribe tu propia función.</p>
+        </div>
+        <div class="header-actions"><div class="math-chip">\(y_{n+1}\approx y(x_n+h)\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <aside class="input-panel">
+          <h3>Define tu problema de valor inicial</h3>
+          <label for="odePreset">Ejemplo aplicado</label>
+          <select id="odePreset" onchange="loadODEExample(this.value)">
+            <option value="growth">Crecimiento poblacional</option>
+            <option value="cooling">Enfriamiento de Newton</option>
+            <option value="mixing">Balance de masa en tanque</option>
+          </select>
+          <p class="hint" id="odeContext">Modelo de crecimiento proporcional: la tasa de cambio es proporcional a la población. y(0)=10 y k=0.5.</p>
+          <label for="odeExpression">Derivada: y' = f(x,y)</label>
+          <input id="odeExpression" value="0.5*y" spellcheck="false" />
+          <p class="hint">Usa x, y, potencias ^ y funciones como sin(x), cos(x) y exp(x). Escribe decimales con punto (0.5).</p>
+          <div class="two-col">
+            <div><label for="odeX0">x inicial</label><input id="odeX0" value="0" /></div>
+            <div><label for="odeY0">y inicial</label><input id="odeY0" value="10" /></div>
+            <div><label for="odeEnd">x final</label><input id="odeEnd" value="2" /></div>
+            <div><label for="odeH">Paso h</label><input id="odeH" value="0.2" /></div>
+          </div>
+          <label for="odeMethod">Método</label>
+          <select id="odeMethod">
+            <option value="euler">Euler explícito</option>
+            <option value="midpoint">Euler mejorado (punto medio)</option>
+            <option value="heun">Heun (trapecio explícito)</option>
+            <option value="rk4" selected>Runge-Kutta de orden 4 (RK4)</option>
+          </select>
+          <p class="hint">En algunos cursos, «Euler mejorado» y «Heun» son el mismo método. Aquí se diferencian como punto medio y trapecio para poder comparar ambas variantes.</p>
+          <details class="ode-glossary"><summary>¿Qué significan x, y, h y k?</summary>
+            <p><strong>x:</strong> tiempo o variable independiente. <strong>y:</strong> cantidad que cambia. <strong>h:</strong> distancia entre pasos. <strong>f:</strong> derivada o tasa de cambio. <strong>k₁…k₄:</strong> pendientes evaluadas para estimar el siguiente valor.</p>
+          </details>
+          <div class="button-row"><button type="button" onclick="runODE()">Calcular PVI</button><button type="button" class="ghost" onclick="downloadODECSV('ode')">Descargar CSV</button><button type="button" class="ghost" onclick="window.print()">Imprimir / PDF</button></div>
+        </aside>
+        <article class="output-panel">
+          <div id="odeOutput" class="output" aria-live="polite"></div>
+          <canvas id="odeCanvas" width="800" height="380" class="plot" role="img" aria-label="Comparación gráfica de solución numérica y referencia RK4"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 7: comparaciones con paso decreciente y estabilidad de la linealización local -->
+    <section id="convergencia" class="lab-section view">
+      <div class="lab-header">
+        <div><p class="eyebrow">Módulo 7 · Convergencia y estabilidad</p>
+          <h2>¿Qué cambia al reducir el tamaño del paso?</h2>
+          <p>Compara los cuatro métodos con h, h/2 y h/4 y explora un criterio de estabilidad linealizada.</p></div>
+        <div class="header-actions"><div class="math-chip">\(h\rightarrow0\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <aside class="input-panel">
+          <h3>Parámetros de comparación</h3>
+          <label for="convExpression">Función: y' = f(x,y)</label><input id="convExpression" value="-2*y" spellcheck="false" />
+          <div class="two-col">
+            <div><label for="convX0">x inicial</label><input id="convX0" value="0" /></div>
+            <div><label for="convY0">y inicial</label><input id="convY0" value="1" /></div>
+            <div><label for="convEnd">x final</label><input id="convEnd" value="2" /></div>
+            <div><label for="convH">Paso h</label><input id="convH" value="0.5" /></div>
+          </div>
+          <p class="hint">Ejemplo clásico de estabilidad: y'=-2y, con y(0)=1. Se compara el error respecto a RK4 refinado, no respecto a una solución analítica.</p>
+          <div class="button-row"><button type="button" onclick="runConvergence()">Comparar métodos</button><button type="button" class="ghost" onclick="downloadODECSV('convergence')">Descargar CSV</button><button type="button" class="ghost" onclick="window.print()">Imprimir / PDF</button></div>
+        </aside>
+        <article class="output-panel">
+          <div id="convOutput" class="output" aria-live="polite"></div>
+          <canvas id="convCanvas" width="800" height="380" class="plot" role="img" aria-label="Gráfica comparativa de cuatro métodos numéricos"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 8: sistemas de dos EDO acopladas -->
+    <section id="sistemas" class="lab-section view">
+      <div class="lab-header"><div><p class="eyebrow">Módulo 8 · Sistemas de ecuaciones ordinarias</p>
+          <h2>Dos ecuaciones que evolucionan juntas</h2>
+          <p>Resuelve \(y'=f(x,y,z),\;z'=g(x,y,z)\) con condiciones iniciales y pasos simultáneos.</p></div>
+        <div class="header-actions"><div class="math-chip">\(\mathbf{Y}'=\mathbf{F}(x,\mathbf{Y})\)</div><button type="button" class="btn secondary small-btn" data-view="guia">Volver al menú</button></div>
+      </div>
+      <div class="lab-grid">
+        <aside class="input-panel">
+          <h3>Modelo de ejemplo: sistema acoplado</h3>
+          <label for="sysF">Primera ecuación: y' =</label><input id="sysF" value="z" spellcheck="false" />
+          <label for="sysG">Segunda ecuación: z' =</label><input id="sysG" value="-y" spellcheck="false" />
+          <p class="hint">Ejemplo de oscilación: y'=z, z'=-y, y(0)=1 y z(0)=0. De forma exacta y=cos(x), z=-sin(x).</p>
+          <div class="two-col">
+            <div><label for="sysX0">x inicial</label><input id="sysX0" value="0" /></div>
+            <div><label for="sysEnd">x final</label><input id="sysEnd" value="6.28" /></div>
+            <div><label for="sysY0">y inicial</label><input id="sysY0" value="1" /></div>
+            <div><label for="sysZ0">z inicial</label><input id="sysZ0" value="0" /></div>
+            <div><label for="sysH">Paso h</label><input id="sysH" value="0.1" /></div>
+          </div>
+          <label for="sysMethod">Método para el sistema</label><select id="sysMethod"><option value="euler">Euler</option><option value="heun">Heun</option><option value="rk4" selected>Runge-Kutta 4</option></select>
+          <div class="button-row"><button type="button" onclick="runSystemODE()">Resolver sistema</button><button type="button" class="ghost" onclick="downloadODECSV('system')">Descargar CSV</button><button type="button" class="ghost" onclick="window.print()">Imprimir / PDF</button></div>
+        </aside>
+        <article class="output-panel">
+          <div id="systemOutput" class="output" aria-live="polite"></div>
+          <canvas id="systemCanvas" width="800" height="380" class="plot" role="img" aria-label="Gráficas de las dos componentes del sistema de ecuaciones diferenciales"></canvas>
+        </article>
+      </div>
+    </section>
+
+    <!-- Módulo 9: Información institucional, docente, estudiante y propósito del recurso -->
+    <section id="acerca" class="section view">
+      <div class="section-title">
+        <p class="eyebrow">Acerca de</p>
+        <h2>Acerca de este proyecto</h2>
+        <p>Espacio de presentación institucional del laboratorio web, con los datos del docente, del estudiante y el propósito académico del recurso.</p>
+      </div>
+
+      <div class="institutional-strip">
+        <img src="https://www.unisimon.edu.co/showimagen/showpdf/centrodocumentos/20231121155455_0.png" alt="Logo oficial Universidad Simón Bolívar (fuente institucional)" class="institutional-logo" onerror="this.style.display='none'" />
+        <div><strong>Universidad Simón Bolívar</strong><small>Ingeniería de Sistemas · Sede Cúcuta · Proyecto educativo estudiantil no oficial</small></div>
+      </div>
+      <div class="about-summary">
+        <div class="about-pill">Programa: Ingeniería de Sistemas</div>
+        <div class="about-pill">Asignatura: Análisis Numérico</div>
+        <div class="about-pill">Universidad Simón Bolívar · Sede Cúcuta</div>
+      </div>
+
+      <div class="about-grid">
+        <article class="profile-card">
+          <div class="profile-photo-wrap">
+            <div class="profile-avatar-initials" aria-label="Docente">AS</div>
+          </div>
+          <div class="profile-copy">
+            <p class="eyebrow">Docente</p>
+            <h3>Anderson Smith Florez Fuentes</h3>
+            <p>Docente orientador de la asignatura <strong>Análisis Numérico</strong>, acompañante del proceso académico y de la evaluación del laboratorio interactivo.</p>
+          </div>
+        </article>
+
+        <article class="profile-card">
+          <div class="profile-photo-wrap">
+            <div class="profile-avatar-initials" aria-label="Desarrollador original">KG</div>
+          </div>
+          <div class="profile-copy">
+            <p class="eyebrow">Estudiante</p>
+            <h3>Kevin Eduardo Garcia Moreno</h3>
+            <p>Estudiante de <strong>Ingeniería de Sistemas</strong> de la <strong>Universidad Simón Bolívar, sede Cúcuta</strong>, participante en la construcción del recurso web académico.</p>
+          </div>
+        </article>
+      </div>
+
+      <div class="output-card authors-note">
+        <h3>Créditos y alcance</h3>
+        <p><strong>Proyecto académico de base:</strong> Kevin Eduardo García Moreno. <strong>Ampliación de métodos de EDO y rediseño:</strong> propuesta de trabajo para Gabriel Argenis Medina Carrero, a verificar con los colaboradores antes de registrar derechos de autor.</p>
+        <p>Este recurso no es un sitio ni un producto oficial de la Universidad Simón Bolívar. El logotipo institucional es una referencia visual obtenida de su sitio público; su uso debe respetar el manual de imagen y las autorizaciones correspondientes.</p>
+      </div>
+      <div class="about-text-grid">
+        <article class="output-card">
+          <h3>¿Por qué se hizo esta web?</h3>
+          <p>Esta web se desarrolló como un apoyo didáctico para la materia de <strong>Análisis Numérico</strong>, con el fin de facilitar la comprensión de los métodos vistos en clase mediante una experiencia visual, interactiva y paso a paso.</p>
+          <p>La intención es que el estudiante no solo vea el resultado final, sino también el procedimiento: datos de entrada, fórmulas utilizadas, iteraciones, tablas y conclusiones. De este modo, el aprendizaje resulta más claro, dinámico y práctico.</p>
+        </article>
+
+        <article class="output-card">
+          <h3>Contexto académico</h3>
+          <ul class="about-list">
+            <li><strong>Programa:</strong> Ingeniería de Sistemas</li>
+            <li><strong>Universidad:</strong> Universidad Simón Bolívar</li>
+            <li><strong>Sede:</strong> Cúcuta</li>
+            <li><strong>Asignatura:</strong> Análisis Numérico</li>
+            <li><strong>Tipo de recurso:</strong> Laboratorio web interactivo para el aprendizaje de métodos numéricos</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Pie de página con información general del recurso -->
+  <footer>
+    <p>Laboratorio educativo desarrollado para la asignatura Análisis Numérico · Ingeniería de Sistemas.</p>
+    <p>Universidad Simón Bolívar · Sede Cúcuta · Proyecto académico estudiantil no oficial.</p>
+  </footer>
+
+  <!-- Lógica principal: cálculos numéricos, renderizado de resultados, gráficas y navegación modular -->
+  <script src="edo-core.js"></script>
+  <script src="edo-ui.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

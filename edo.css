@@ -1,0 +1,65 @@
+/* Estética universitaria: verde institucional y tonos auxiliares. */
+:root {
+  --bg:#f4f8f5;
+  --paper:#fff;
+  --ink:#1b3328;
+  --muted:#61746a;
+  --primary:#09843b;
+  --primary-2:#075c2d;
+  --accent:#1b9f56;
+  --line:#d5e4db;
+  --grid:rgba(9,132,59,.065);
+  --shadow:0 18px 46px rgba(10,60,30,.1);
+}
+.hero {min-height:565px; background:radial-gradient(circle at 18% 10%,rgba(9,132,59,.17),transparent 32%),radial-gradient(circle at 90% 28%,rgba(33,151,94,.09),transparent 36%),linear-gradient(135deg,#fff 5%,#eaf8ef 100%);}
+.logo-mark {box-shadow:0 10px 24px rgba(9,132,59,.24);}
+.lead {color:#486157;}
+
+.badges span,.tag,.math-chip {border-color:rgba(9,132,59,.17);color:#075c2d;}
+.primary,button{box-shadow:0 12px 22px rgba(9,132,59,.2);}
+.secondary,button.ghost{border-color:rgba(9,132,59,.19);}
+.mini-card,.activity-grid article{background:#f8fcf9;}
+.input-panel{background:linear-gradient(180deg,#f1faf4,#fff);}
+input,textarea,select{border-color:#cbdcd1;}
+input:focus,textarea:focus,select:focus{border-color:var(--primary);box-shadow:0 0 0 4px rgba(9,132,59,.1);}
+code{background:#e8f5ec;color:#17613a;}
+.new-module{border:1px solid #a7d9ba !important;background:linear-gradient(160deg,#f0fcf3,#fff) !important;}
+.new-module .module-number{background:#d9f3e2;color:#075c2d;}
+.module-nav{flex-wrap:wrap;justify-content:flex-end;}
+.institutional-strip{display:flex;align-items:center;gap:18px;padding:18px 20px;border:1px solid var(--line);background:#f7fcf8;border-radius:18px;margin-bottom:18px;}
+.institutional-logo{height:68px;width:auto;max-width:230px;object-fit:contain;}
+.institutional-strip strong{font-size:18px;display:block;}
+.institutional-strip small{display:block;color:var(--muted);line-height:1.5;margin-top:3px;}
+.authors-note{margin:24px 0;}
+.authors-note p{line-height:1.6;color:var(--muted);}
+.big-result{font-size:clamp(19px,2vw,27px);font-weight:850;color:#07602c;line-height:1.55;background:#e9f8ee;padding:16px;border-radius:14px;overflow-wrap:anywhere;}
+.slope-values{background:#f1f8f4;border:1px solid #dcebe1;border-radius:9px;padding:9px;line-height:1.65;font-variant-numeric:tabular-nums;}
+.ode-legend{display:flex;gap:9px 18px;flex-wrap:wrap;font-size:13px;font-weight:700;color:#3c5846;padding:8px 0;}
+.ode-legend-item{display:inline-flex;gap:6px;align-items:center;}
+.ode-legend-item i{display:inline-block;height:10px;width:17px;border-radius:4px;}
+@media(max-width:770px){.institutional-strip{flex-wrap:wrap;}.institutional-logo{height:55px;}.module-nav{justify-content:flex-start;}}
+
+.brand-university-logo{width:auto;max-width:158px;max-height:55px;object-fit:contain;flex-shrink:0;margin-left:7px;}
+@media(max-width:1080px){.brand-university-logo{max-width:120px;max-height:45px}}
+@media(max-width:700px){.brand-university-logo{max-width:95px;max-height:42px}.brand strong{font-size:15px}}
+
+.ode-glossary{margin:16px 0 7px;padding:13px;background:#f7fcf8;border:1px solid var(--line);border-radius:12px;}
+.ode-glossary summary{cursor:pointer;font-weight:750;color:var(--primary);}
+.ode-glossary p{font-size:13px;line-height:1.65;color:var(--muted);}
+.calculation-line code{display:inline-block;white-space:normal;word-break:break-word;line-height:1.65;}
+@media print{
+ body{background:#fff !important;}
+ body::before,.hero,footer,.input-panel,.button-row,.header-actions{display:none !important;}
+ main{width:100%;margin:0;}
+ .view:not(.is-active){display:none !important;}
+ .lab-section{box-shadow:none;border:0;}
+ .lab-grid{display:block;}
+ .lab-header{padding:8px 0;}
+ .output-panel{padding:8px 0;overflow:visible;}
+ .output-card,.step-block{break-inside:avoid;box-shadow:none;}
+ canvas{width:100% !important;height:auto !important;max-height:320px;}
+ .table-wrap{overflow:visible;}
+}
+
+/* Marcadores de perfil: recursos de terceros no incluidos en esta publicación. */
+.profile-avatar-initials {width:100%;height:100%;min-height:120px;display:flex;align-items:center;justify-content:center;background:#e3f3e9;color:#0c7837;font-size:2.2rem;font-weight:800;letter-spacing:.06em;border-radius:18px;}
