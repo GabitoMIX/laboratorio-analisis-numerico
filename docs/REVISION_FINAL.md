@@ -9,7 +9,7 @@ Usa esta lista para verificar el proyecto antes de subirlo a GitHub o enviarlo a
 - [ ] Existe `app.js`.
 - [ ] Existe `README.md`.
 - [ ] Existe carpeta `docs/` con manuales.
-- [ ] Existe carpeta `resource/` con imágenes y documentos de apoyo.
+- [ ] Existen `edo-core.js`, `edo-ui.js`, `edo.css` y `tests/edo.test.js`.
 
 ## Interfaz
 
@@ -26,6 +26,9 @@ Usa esta lista para verificar el proyecto antes de subirlo a GitHub o enviarlo a
 - [ ] Falsa posición genera tabla de iteraciones.
 - [ ] Mínimos cuadrados genera matriz, polinomio y residuos.
 - [ ] Regresión lineal genera sumatorias, modelo, `r` y `R²`.
+- [ ] Euler, Heun, punto medio y RK4 generan pasos coherentes.
+- [ ] Convergencia compara resultados con paso refinado.
+- [ ] Sistemas de EDO grafica las dos variables.
 
 ## Documentación
 
@@ -41,6 +44,9 @@ Ejecutar:
 
 ```bash
 node --check app.js
+node --check edo-core.js
+node --check edo-ui.js
+node --test tests/edo.test.js
 ```
 
 Probar localmente:
@@ -57,7 +63,7 @@ http://localhost:8000
 
 ## Entrega
 
-- [ ] Crear repositorio en GitHub.
+- [ ] Comprobar los archivos publicados en GitHub.
 - [ ] Subir todos los archivos.
 - [ ] Activar GitHub Pages si se requiere enlace público.
 - [ ] Compartir enlace del repositorio y/o enlace publicado.

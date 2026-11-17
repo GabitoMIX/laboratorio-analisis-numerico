@@ -1,11 +1,10 @@
-# Documentación del proyecto
+# Documentación del laboratorio
 
-Esta carpeta contiene los documentos de apoyo para entrega, uso, mantenimiento y publicación del Laboratorio Interactivo de Análisis Numérico.
+Manuales y guías para la entrega y el mantenimiento del proyecto:
 
-## Documentos incluidos
-
-- `MANUAL_USUARIO.md`: explica cómo usar cada módulo de la aplicación.
-- `MANUAL_TECNICO.md`: describe la arquitectura y lógica interna del proyecto.
-- `GUIA_GITHUB.md`: muestra cómo subir el proyecto a GitHub y publicarlo con GitHub Pages.
-- `GUIA_PRESENTACION.md`: propone un guion para sustentar el proyecto.
-- `REVISION_FINAL.md`: lista de chequeo antes de entregar.
+- `MANUAL_USUARIO.md`: instrucciones y ejemplos de navegación por módulos.
+- `MANUAL_TECNICO.md`: arquitectura HTML, CSS y JavaScript, validaciones y pruebas.
+- `GUIA_METODOS_EDO.md`: fórmulas, convergencia, estabilidad y sistemas de ecuaciones.
+- `GUIA_PRESENTACION.md`: estructura sugerida para la sustentación académica.
+- `GUIA_GITHUB.md`: ejecución local, validación y publicación de cambios.
+- `REVISION_FINAL.md`: lista de comprobación manual y técnica.

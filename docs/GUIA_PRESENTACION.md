@@ -17,6 +17,9 @@ La aplicación está organizada por módulos. En el menú superior se encuentran
 - Falsa posición.
 - Mínimos cuadrados.
 - Regresión lineal.
+- Euler, punto medio, Heun y RK4.
+- Convergencia y estabilidad.
+- Sistemas de ecuaciones diferenciales.
 - Acerca de.
 
 Cada módulo funciona de manera independiente y presenta una estructura similar: entrada de datos, botón de cálculo, procedimiento matemático, tablas, resultado final y gráfica.
@@ -60,6 +63,14 @@ Frase sugerida:
 Frase sugerida:
 
 > En regresión lineal se calcula una recta de ajuste, junto con la pendiente, el intercepto, el coeficiente de correlación y el coeficiente de determinación. Esto permite interpretar qué tan bien la recta representa el comportamiento de los datos.
+
+---
+
+## Demostración de ecuaciones diferenciales
+
+Usa el problema `y'=y`, con `y(0)=1`, paso `h=0.1` y extremo `x=1`. Explica el concepto de condición inicial y compara Euler con RK4. Después ingresa a **Convergencia** para mostrar cómo varían las aproximaciones cuando disminuye el paso. Recuerda que las referencias numéricas no son siempre soluciones exactas.
+
+Para la sección **Sistemas**, presenta `y'=z`, `z'=-y`, con `y(0)=1` y `z(0)=0`, y explica que se estiman dos funciones simultáneamente.
 
 ---
 

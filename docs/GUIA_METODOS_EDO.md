@@ -1,4 +1,4 @@
-# Guía académica de los módulos nuevos (v2.0)
+# Guía académica de ecuaciones diferenciales ordinarias
 
 ## 1. Modelación y problemas de valor inicial
 Un PVI parte de `y' = f(x,y)` y `y(x0)=y0`. Ejemplo: crecimiento `y'=0.5y`, `y(0)=10`. Los estudiantes pueden modificar condiciones y paso.

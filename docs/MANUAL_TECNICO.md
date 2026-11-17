@@ -279,12 +279,26 @@ Aun así, en un entorno de producción más robusto se recomienda usar un parser
 
 ---
 
+## Componentes para ecuaciones diferenciales
+
+- `edo-core.js`: define los métodos de paso y las rutinas de integración para un PVI y sistemas acoplados, la comparación por refinamiento y la estimación de estabilidad local.
+- `edo-ui.js`: conecta los formularios con el núcleo matemático, las tablas de pasos, las gráficas y la exportación de resultados.
+- `edo.css`: define las reglas visuales de las nuevas secciones.
+- `tests/edo.test.js`: agrupa las pruebas automatizadas del núcleo numérico mediante `node:test`.
+
+Las fórmulas se presentan con fines didácticos. Los resultados de convergencia se comparan con RK4 refinado y no con una solución exacta universal. Se limitan los pasos permitidos por ejecución para evitar cálculos excesivos.
+
+---
+
 ## 14. Validación técnica recomendada
 
 Antes de entregar o publicar:
 
 ```bash
 node --check app.js
+node --check edo-core.js
+node --check edo-ui.js
+node --test tests/edo.test.js
 ```
 
 También se recomienda abrir el proyecto con:

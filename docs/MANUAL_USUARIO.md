@@ -206,6 +206,16 @@ El sistema muestra:
 
 ---
 
+## Módulos de ecuaciones diferenciales y sistemas
+
+En **Euler · Heun · RK4**, introduce una función de dos variables `f(x,y)`, la condición inicial `(x0,y0)`, el extremo y el tamaño de paso `h`. Ejecuta un método y compara la tabla de iteraciones y la gráfica. El selector de modelos incluye ejemplos de crecimiento, enfriamiento y mezclas.
+
+En **Convergencia**, compara los resultados con pasos `h`, `h/2` y `h/4`. La referencia numérica refinada no constituye el valor exacto de la solución.
+
+En **Sistemas EDO**, define las dos ecuaciones para `y'` y `z'`, las condiciones iniciales y el tamaño de paso. Euler, Heun y RK4 generan aproximaciones para ambas variables.
+
+---
+
 ## 9. Mensajes de error comunes
 
 | Mensaje | Causa probable | Solución |

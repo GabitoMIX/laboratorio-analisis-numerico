@@ -1,93 +1,77 @@
-# Laboratorio Virtual de Análisis Numérico · Versión 2.0
+# Laboratorio Virtual de Análisis Numérico
 
-**Objeto virtual de aprendizaje (OVA)** para Ingeniería de Sistemas, **Universidad Simón Bolívar — sede Cúcuta**. Es un **proyecto académico estudiantil**, no un producto oficial de la institución.
+**Objeto virtual de aprendizaje (OVA)** para la asignatura de Análisis Numérico, programa de Ingeniería de Sistemas de la **Universidad Simón Bolívar, sede Cúcuta**. Proyecto académico estudiantil no oficial.
 
-La versión 2.0 amplía el laboratorio web original con herramientas de modelación, problemas de valor inicial (PVI) y solución numérica de ecuaciones diferenciales ordinarias (EDO). Conserva los cinco módulos previos.
+**Estudiante que presenta el proyecto:** Gabriel Argenis Medina Carrero.  
+**Docente:** Anderson Smith Florez Fuentes.
 
-## Funcionalidades
+El laboratorio permite introducir datos, calcular aproximaciones, visualizar tablas y gráficas e interpretar resultados de distintos métodos numéricos.
 
-| Área | Métodos y herramientas |
+## Métodos disponibles
+
+| Área | Herramientas |
 | --- | --- |
-| Interpolación | Lagrange e interpolación lineal (módulos conservados) |
-| Raíces | Falsa posición (módulo conservado) |
-| Ajuste de datos | Mínimos cuadrados y regresión lineal (módulos conservados) |
-| Modelación y PVI | Funciones `y'=f(x,y)`, condición inicial y paso `h` |
-| Métodos para EDO | Euler explícito, Euler mejorado por punto medio, Heun y Runge-Kutta 4 |
-| Ingeniería y leyes de conservación | Ejemplos de crecimiento, enfriamiento y balance de masa |
-| Convergencia y estabilidad | Comparación con pasos `h`, `h/2`, `h/4`; error respecto a RK4 refinado; indicador de estabilidad absoluta de la linealización local |
-| Sistemas de EDO | Dos ecuaciones acopladas `y'=f(x,y,z)` y `z'=g(x,y,z)`; Euler, Heun o RK4 |
-| Visualización | Tablas, primeros pasos, gráficas `canvas` y exportación a CSV e impresión a PDF de los módulos nuevos |
+| Interpolación | Lagrange e interpolación lineal |
+| Búsqueda de raíces | Método de falsa posición |
+| Ajuste de datos | Mínimos cuadrados polinomiales y regresión lineal |
+| Problemas de valor inicial | Modelos `y'=f(x,y)` y condición inicial `y(x0)=y0` |
+| Ecuaciones diferenciales | Euler, punto medio, Heun y Runge-Kutta de cuarto orden |
+| Convergencia y estabilidad | Comparación de tamaños de paso y estabilidad local aproximada |
+| Sistemas de EDO | Dos ecuaciones acopladas con Euler, Heun y RK4 |
+| Visualización | Tablas de iteraciones, gráficas y exportación CSV en los módulos de EDO |
 
-**Nota didáctica:** algunos libros llaman «Euler mejorado» al método de Heun. Para ofrecer dos variantes distintas, este programa llama *Euler mejorado* al método del punto medio y *Heun* al método trapezoidal explícito. Confirma la convención de tu profesor antes de sustentar.
+**Nota didáctica:** algunos textos llaman «Euler mejorado» al método de Heun. Este laboratorio utiliza «Euler mejorado» para el método del punto medio y mantiene Heun como método trapezoidal explícito.
 
-## Abrir en computador
+## Cómo ejecutar
 
-1. Descomprime el proyecto.
-2. Abre `index.html` con el navegador, o ejecuta un servidor local:
+1. Descarga o clona el repositorio.
+2. Abre `index.html` en un navegador moderno. Para servirlo localmente también puedes ejecutar:
 
    ```bash
    python -m http.server 8000
    ```
 
-3. Navega a `http://localhost:8000`.
+3. En ese caso, abre `http://localhost:8000`.
 
-**No necesita backend ni base de datos.** MathJax, utilizado por la versión original, se carga por CDN y requiere conexión a Internet para mostrar las fórmulas. El logo institucional se referencia desde la página oficial de la universidad y también requiere conectividad. Si no carga, los textos institucionales permanecen disponibles.
+No requiere backend, cuentas ni base de datos. MathJax se carga por Internet para mostrar las fórmulas en LaTeX; el logotipo institucional también se obtiene desde su sitio público.
 
-## Pruebas numéricas automáticas
+## Verificación técnica
 
-Si tienes Node.js:
+Se necesita Node.js para ejecutar las pruebas:
 
 ```bash
+node --check app.js
+node --check edo-core.js
+node --check edo-ui.js
 node --test tests/edo.test.js
 ```
 
-Se comprueban el análisis seguro de expresiones, Euler, Heun, punto medio, RK4, ajuste del último paso, sistemas de EDO, convergencia, estabilidad y validaciones.
+Las pruebas automáticas cubren el analizador de expresiones, Euler, punto medio, Heun, RK4, convergencia, estabilidad, sistemas de ecuaciones y validaciones de datos.
 
-## Subir al repositorio vacío de GitHub
+## Organización del proyecto
 
-Crea el repositorio `GabitoMIX/laboratorio-analisis-numerico` sin README, sin licencia y sin `.gitignore` iniciales. Desde PowerShell o Git Bash dentro de la carpeta descomprimida:
-
-```bash
-git init
-git add .
-git commit -m "Versión 2.0: EDO, sistemas, convergencia e identidad visual"
-git branch -M main
-git remote add origin https://github.com/GabitoMIX/laboratorio-analisis-numerico.git
-git push -u origin main
+```text
+index.html                 Interfaz y navegación
+styles.css                 Diseño general
+edo.css                    Estilos de los módulos de ecuaciones diferenciales
+app.js                     Interpolación, raíces, ajuste y navegación
+edo-core.js                Implementación numérica de EDO y sistemas
+edo-ui.js                  Controladores, tablas y visualizaciones de EDO
+tests/edo.test.js          Pruebas automatizadas
+docs/                      Manuales y guías para exposición y mantenimiento
 ```
 
-**Mantén el repositorio privado** hasta aclarar los permisos de reutilización, autoría y el uso del logotipo. Más pasos en `docs/GUIA_GITHUB.md`.
+## Material de consulta
 
-## Estructura
+- [Manual del usuario](docs/MANUAL_USUARIO.md)
+- [Manual técnico](docs/MANUAL_TECNICO.md)
+- [Guía de los métodos de EDO](docs/GUIA_METODOS_EDO.md)
+- [Guía de sustentación](docs/GUIA_PRESENTACION.md)
+- [Guía de mantenimiento en GitHub](docs/GUIA_GITHUB.md)
+- [Lista de revisión](docs/REVISION_FINAL.md)
 
-```
-index.html           # Interfaz completa y navegación SPA
-styles.css           # Estilos heredados
-edo.css              # Paleta de universidad y estilos nuevos
-app.js               # Módulos previos y navegación SPA
-edo-core.js          # Métodos numéricos independientes del DOM
-edo-ui.js            # Formularios, pasos, tablas, CSV y gráficas nuevas
-tests/edo.test.js    # Pruebas matemáticas
-docs/                # Manuales y documentación conservada
-docs/                # Guías, manuales y alcance de la versión 2.0
-```
+## Alcance y precisiones
 
-## Créditos y derechos
+Las soluciones obtenidas son aproximaciones numéricas. El método RK4 refinado empleado para comparar convergencia **no equivale a una solución analítica exacta**. El indicador de estabilidad utiliza una linealización local, por lo que no garantiza la estabilidad global de sistemas no lineales. El límite general del motor es de 1.000 pasos por ejecución.
 
-- **Base anterior:** proyecto académico entregado a nombre de **Kevin Eduardo García Moreno**. Mantuvimos su atribución y estructura funcional. Se requiere aclarar la participación de los colaboradores y obtener el consentimiento correspondiente antes de distribuir públicamente la obra derivada.
-- **Ampliación y rediseño v2.0:** nueva implementación preparada para el proyecto de **Gabriel Argenis Medina Carrero**, pendiente de revisión de responsables, pruebas de aceptación y definición final de autores antes de cualquier trámite de derechos de autor.
-- **Universidad:** identidad visual de referencia de la Universidad Simón Bolívar. El manual de imagen prohíbe deformar o modificar el logosímbolo; usarlo en una publicación debe respetar las condiciones institucionales. Fuente: https://www.unisimon.edu.co/servicios/planeacion/servicios/471
-
-**Este repositorio aún no incluye licencia de software.** No presumas que el código o los recursos de la versión original son de dominio público. Verifica autorizaciones antes de compartir el ZIP públicamente.
-
-## Límites científicos del programa
-
-- Las soluciones son **aproximaciones numéricas**, sensibles a h y al modelo.
-- La «referencia» para errores de convergencia es **RK4 refinado**, no solución exacta; sirve para exploración didáctica.
-- El criterio de estabilidad se calcula con **derivada local estimada** y no prueba estabilidad global en sistemas ni EDO no lineales.
-- El motor soporta expresiones matemáticas elementales; no es un CAS simbólico. El límite normal es 1000 pasos por corrida.
-- Los modelos prediseñados son ilustrativos y no reemplazan criterios de ingeniería.
-
-## Archivos que no se incluyen en GitHub
-
-Se han **excluido las fotografías personales, las ilustraciones de perfil y los PDF antiguos** de `resource/`, porque el sitio puede funcionar sin ellos. Se conservan los créditos en texto. El paquete ZIP anterior sirve como respaldo local de esos recursos mientras se aclaran las autorizaciones de distribución.
+El proyecto es una herramienta educativa y **no un producto oficial de la Universidad Simón Bolívar**. El uso de su imagen institucional está sujeto a las autorizaciones correspondientes. No se incluye licencia de software publicada.
