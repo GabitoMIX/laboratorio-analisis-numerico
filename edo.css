@@ -74,6 +74,51 @@ code{background:#e8f5ec;color:#17613a;}
 @media(max-width:1120px){.selector-grid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media(max-width:720px){.selector-grid{grid-template-columns:1fr;}.module-card,.module-card.new-module,.module-card.about-card-highlight{min-height:unset;padding:19px;}.institutional-hero-strip{gap:10px;}.institutional-hero-strip img{width:230px;max-height:68px;}}
 
+
+/* ===== Diseño de entrega: ancho aprovechado y portada exclusiva de Inicio ===== */
+.topbar,
+.hero-content,
+main,
+.institutional-hero-strip {
+  width: calc(100% - clamp(24px, 3.5vw, 80px));
+  max-width: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+.topbar { gap: clamp(16px, 2.5vw, 42px); }
+.module-nav { flex: 1 1 auto; max-width: none; }
+.hero-content {
+  grid-template-columns: minmax(0, 1.16fr) minmax(340px, .84fr);
+  gap: clamp(24px, 4vw, 90px);
+}
+.hero-content h1 { max-width: 1000px; }
+.hero-content .lead { max-width: 960px; }
+/* En Lagrange, Lineal, Euler, etc., solamente la navegación y su propio contenido. */
+body.module-mode .hero {
+  min-height: 0;
+  padding-bottom: 0;
+  overflow: visible;
+  background: transparent;
+}
+body.module-mode .hero-grid,
+body.module-mode .hero-content,
+body.module-mode .institutional-hero-strip { display: none !important; }
+body.module-mode .topbar {
+  padding-top: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(9,132,59,.13);
+}
+body.module-mode main { margin-top: 20px; }
+@media (max-width: 1000px) {
+  .hero-content { grid-template-columns: 1fr; }
+  .module-nav { flex: 1 1 100%; justify-content: flex-start; }
+}
+@media (max-width: 720px) {
+  .topbar,.hero-content,main,.institutional-hero-strip { width: calc(100% - 20px); }
+  body.module-mode .topbar { padding-top: 10px; padding-bottom: 10px; }
+  body.module-mode main { margin-top: 10px; }
+}
+
 @media print{
  body{background:#fff !important;}
  body::before,.hero,footer,.input-panel,.button-row,.header-actions{display:none !important;}

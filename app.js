@@ -665,7 +665,7 @@ const moduleRunners = {
 
 // Actualiza visualmente los botones de navegación para indicar qué vista está activa.
 function setActiveNavigation(viewId) {
-  document.querySelectorAll('[data-view]').forEach(btn => {
+  document.querySelectorAll('.nav-pill[data-view]').forEach(btn => {
     const isActive = btn.dataset.view === viewId;
     btn.classList.toggle('is-active', isActive);
     if (btn.classList.contains('nav-pill')) {
@@ -686,6 +686,8 @@ function showView(viewId, { replaceHash = false, scroll = true } = {}) {
     view.classList.toggle('is-active', view.id === selectedId);
   });
   setActiveNavigation(selectedId);
+  // La portada completa es exclusiva de Inicio; los demás módulos usan la barra compacta.
+  document.body.classList.toggle('module-mode', selectedId !== 'guia');
 
   const desiredHash = `#${selectedId}`;
   if (window.location.hash !== desiredHash) {
