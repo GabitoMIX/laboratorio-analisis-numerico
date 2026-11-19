@@ -11,8 +11,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Laboratorio Virtual de Análisis Numérico</title>
   <!-- Hoja de estilos principal del proyecto -->
-  <link rel="stylesheet" href="styles.css" />
-  <link rel="stylesheet" href="edo.css" />
+  <link rel="stylesheet" href="styles.css?v=20261119-final" />
+  <link rel="stylesheet" href="edo.css?v=20261119-final" />
   <!-- Configuración de MathJax para renderizar fórmulas escritas en LaTeX dentro de la página -->
   <script>
     window.MathJax = {
@@ -49,6 +49,13 @@
         <button type="button" class="nav-pill" data-view="acerca">Acerca de</button>
       </div>
     </nav>
+
+  </header>
+
+  <main>
+    <!-- Vista de inicio: guía pedagógica y tarjetas de acceso a cada módulo -->
+    <section id="guia" class="view is-active home-view">
+      <div class="home-intro">
     <!-- Bloque de bienvenida: explica el propósito del laboratorio y muestra una fórmula representativa -->
     <section class="hero-content">
       <div>
@@ -57,7 +64,7 @@
         <p class="lead">Resuelve métodos clásicos de interpolación, raíces y regresión. Incluye modelación de problemas de valor inicial, Euler, Euler mejorado, Heun, Runge-Kutta, convergencia y sistemas de ecuaciones diferenciales.</p>
         <div class="hero-actions">
           <button type="button" class="btn primary" data-view="edo">Explorar ecuaciones diferenciales</button>
-          <button type="button" class="btn secondary" data-view="guia">Ver módulos</button>
+          <button type="button" class="btn secondary" data-scroll-to="modulos">Ver módulos</button>
         </div>
       </div>
       <aside class="formula-card">
@@ -73,11 +80,8 @@
         <small>Universidad Simón Bolívar · Ingeniería de Sistemas · Sede Cúcuta · Proyecto estudiantil</small>
       </div>
     </div>
-  </header>
-
-  <main>
-    <!-- Vista de inicio: guía pedagógica y tarjetas de acceso a cada módulo -->
-    <section id="guia" class="section guide view is-active">
+      </div>
+      <div class="section guide guide-content">
       <div class="section-title">
         <p class="eyebrow">Diseño pedagógico</p>
         <h2>Cómo usar el laboratorio en clase</h2>
@@ -100,7 +104,7 @@
           <p>Cada resultado incluye una conclusión sencilla para relacionar el cálculo con el significado del método.</p>
         </article>
       </div>
-      <div class="selector-heading">
+      <div class="selector-heading" id="modulos">
         <p class="eyebrow">Módulos disponibles</p>
         <h3>Selecciona un método para experimentar</h3>
         <p>Cada módulo presenta una actividad interactiva con datos de entrada, desarrollo matemático, visualización gráfica e interpretación del resultado.</p>
@@ -161,6 +165,7 @@
           <p>Información del docente, del estudiante, del curso y propósito de la web educativa.</p>
           <button type="button" data-view="acerca">Abrir módulo</button>
         </article>
+      </div>
       </div>
     </section>
 
@@ -521,6 +526,6 @@
   <!-- Lógica principal: cálculos numéricos, renderizado de resultados, gráficas y navegación modular -->
   <script src="edo-core.js"></script>
   <script src="edo-ui.js"></script>
-  <script src="app.js"></script>
+  <script src="app.js?v=20261119-final"></script>
 </body>
 </html>

@@ -709,6 +709,13 @@ function showView(viewId, { replaceHash = false, scroll = true } = {}) {
 // Inicializa los eventos de navegación modular cuando el DOM está listo.
 function initModuleNavigation() {
   document.addEventListener('click', (event) => {
+    const scrollTrigger = event.target.closest('[data-scroll-to]');
+    if (scrollTrigger) {
+      event.preventDefault();
+      const destination = document.getElementById(scrollTrigger.dataset.scrollTo);
+      if (destination) destination.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
     const trigger = event.target.closest('[data-view]');
     if (!trigger) return;
     event.preventDefault();
