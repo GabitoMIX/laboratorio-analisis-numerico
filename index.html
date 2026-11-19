@@ -12,7 +12,7 @@
   <title>Laboratorio Virtual de Análisis Numérico</title>
   <!-- Hoja de estilos principal del proyecto -->
   <link rel="stylesheet" href="styles.css?v=20261119-final" />
-  <link rel="stylesheet" href="edo.css?v=20261119-final" />
+  <link rel="stylesheet" href="edo.css?v=20261119-metodos" />
   <!-- Configuración de MathJax para renderizar fórmulas escritas en LaTeX dentro de la página -->
   <script>
     window.MathJax = {
@@ -63,14 +63,36 @@
         <h1>Explora, calcula y comprende los métodos numéricos.</h1>
         <p class="lead">Resuelve métodos clásicos de interpolación, raíces y regresión. Incluye modelación de problemas de valor inicial, Euler, Euler mejorado, Heun, Runge-Kutta, convergencia y sistemas de ecuaciones diferenciales.</p>
         <div class="hero-actions">
-          <button type="button" class="btn primary" data-view="edo">Explorar ecuaciones diferenciales</button>
-          <button type="button" class="btn secondary" data-scroll-to="modulos">Ver módulos</button>
+          <button type="button" class="btn primary" data-scroll-to="modulos">Explorar todos los métodos</button>
+          <button type="button" class="btn secondary" data-scroll-to="guia-uso">Cómo usar el laboratorio</button>
         </div>
       </div>
-      <aside class="formula-card">
-        <span class="tag">Método destacado · Runge-Kutta de cuarto orden</span>
-        <div class="math-display">\[y_{n+1}=y_n+\frac{h}{6}(k_1+2k_2+2k_3+k_4)\]</div>
-        <p>Simula, consulta las pendientes de cada paso y contrasta soluciones aproximadas con gráficas. Proyecto académico independiente.</p>
+      <aside class="formula-card overview-card" aria-label="Áreas de estudio del laboratorio">
+        <span class="tag">Un laboratorio · diferentes métodos numéricos</span>
+        <h2 class="overview-title">¿Qué puedes resolver aquí?</h2>
+        <div class="overview-grid">
+          <div class="overview-topic">
+            <span class="overview-math">\(P(x)\)</span>
+            <strong>Interpolación</strong>
+            <small>Aproxima valores a partir de datos.</small>
+          </div>
+          <div class="overview-topic">
+            <span class="overview-math">\(f(x)=0\)</span>
+            <strong>Raíces</strong>
+            <small>Encuentra soluciones de ecuaciones.</small>
+          </div>
+          <div class="overview-topic">
+            <span class="overview-math">\(\hat{y}=a+bx\)</span>
+            <strong>Ajuste y regresión</strong>
+            <small>Analiza relaciones entre variables.</small>
+          </div>
+          <div class="overview-topic">
+            <span class="overview-math">\(y'=f(x,y)\)</span>
+            <strong>Ecuaciones diferenciales</strong>
+            <small>Estudia la evolución de sistemas.</small>
+          </div>
+        </div>
+        <p class="overview-note">Elige el módulo según el problema que quieras resolver.</p>
       </aside>
     </section>
     <div class="institutional-hero-strip" aria-label="Identidad institucional del proyecto">
@@ -82,7 +104,7 @@
     </div>
       </div>
       <div class="section guide guide-content">
-      <div class="section-title">
+      <div class="section-title" id="guia-uso">
         <p class="eyebrow">Diseño pedagógico</p>
         <h2>Cómo usar el laboratorio en clase</h2>
         <p>La idea no es memorizar fórmulas, sino observar cómo el método transforma datos iniciales en una respuesta numérica verificable.</p>
