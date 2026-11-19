@@ -1,5 +1,7 @@
 # Laboratorio Virtual de Análisis Numérico
 
+**Sitio público:** https://gabitomix.github.io/laboratorio-analisis-numerico/
+
 **Objeto virtual de aprendizaje (OVA)** para la asignatura de Análisis Numérico, programa de Ingeniería de Sistemas de la **Universidad Simón Bolívar, sede Cúcuta**. Proyecto académico estudiantil no oficial.
 
 **Estudiante que presenta el proyecto:** Gabriel Argenis Medina Carrero.  
@@ -33,7 +35,7 @@ El laboratorio permite introducir datos, calcular aproximaciones, visualizar tab
 
 3. En ese caso, abre `http://localhost:8000`.
 
-No requiere backend, cuentas ni base de datos. MathJax se carga por Internet para mostrar las fórmulas en LaTeX; el logotipo institucional también se obtiene desde su sitio público.
+No requiere backend, cuentas ni base de datos. MathJax se carga por Internet para mostrar las fórmulas en LaTeX; el logotipo institucional se distribuye localmente en `assets/unisimon-logo.png` para evitar que desaparezca por problemas de carga externa.
 
 ## Verificación técnica
 
@@ -58,6 +60,7 @@ app.js                     Interpolación, raíces, ajuste y navegación
 edo-core.js                Implementación numérica de EDO y sistemas
 edo-ui.js                  Controladores, tablas y visualizaciones de EDO
 tests/edo.test.js          Pruebas automatizadas
+assets/unisimon-logo.png   Logosímbolo institucional en la interfaz
 docs/                      Manuales y guías para exposición y mantenimiento
 ```
 
@@ -75,3 +78,6 @@ docs/                      Manuales y guías para exposición y mantenimiento
 Las soluciones obtenidas son aproximaciones numéricas. El método RK4 refinado empleado para comparar convergencia **no equivale a una solución analítica exacta**. El indicador de estabilidad utiliza una linealización local, por lo que no garantiza la estabilidad global de sistemas no lineales. El límite general del motor es de 1.000 pasos por ejecución.
 
 El proyecto es una herramienta educativa y **no un producto oficial de la Universidad Simón Bolívar**. El uso de su imagen institucional está sujeto a las autorizaciones correspondientes. No se incluye licencia de software publicada.
+## Presentación visual
+
+Todos los módulos comparten una paleta verde y tipografía uniforme. El proyecto utiliza MathJax para representar fórmulas LaTeX en las vistas y resultados de los métodos. El logosímbolo se presenta únicamente como identificación de contexto académico: la aplicación no representa un sitio oficial de la universidad.

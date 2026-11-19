@@ -115,8 +115,8 @@ function runODE() {
     }[method];
     out.innerHTML=`
       <div class="output-card success"><h3>Resultado — ${odeEsc(NumericalODE.METHODS[method])}</h3>
-      <p>Para el PVI <strong>y' = ${odeEsc(expr)}</strong>, con y(${odeFmt(x0)})=${odeFmt(y0)}, se obtiene:</p>
-      <div class="big-result">y(${odeFmt(end)}) ≈ ${odeFmt(result.final,9)}</div>
+      <p>Para el PVI <strong>y' = ${odeEsc(expr)}</strong>, con \\(y(${odeFmt(x0)})=${odeFmt(y0)}\\), se obtiene:</p>
+      <div class="big-result">\\(y(${odeFmt(end)}) \\approx ${odeFmt(result.final,9)}\\)</div>
       <p class="hint">Aproximación con ${result.rows.length-1} pasos. El último paso se ajusta si el intervalo no es múltiplo exacto de h.</p></div>
       <div class="output-card"><h3>Fórmula y procedimiento</h3><p>\\[${formula}\\]</p><div class="step-list">${odeSlopeBlocks(result.rows,method)}</div>
       <p class="hint">Se muestran los primeros cuatro pasos; todos los pasos quedan en la tabla y el CSV.</p></div>
@@ -143,10 +143,10 @@ function runSystemODE(){
     out.innerHTML=`
       <div class="output-card success"><h3>Solución aproximada del sistema</h3>
       <p>y'=${odeEsc(expr1)} y z'=${odeEsc(expr2)}, con y(${odeFmt(settings.x0)})=${odeFmt(settings.y0)}, z(${odeFmt(settings.x0)})=${odeFmt(settings.z0)}.</p>
-      <div class="big-result">y(${odeFmt(settings.end)}) ≈ ${odeFmt(result.final[0],8)}<br>z(${odeFmt(settings.end)}) ≈ ${odeFmt(result.final[1],8)}</div>
+      <div class="big-result">\\(y(${odeFmt(settings.end)}) \\approx ${odeFmt(result.final[0],8)}\\)<br>\\(z(${odeFmt(settings.end)}) \\approx ${odeFmt(result.final[1],8)}\\)</div>
       <p class="hint">Método ${odeEsc(NumericalODE.METHODS[settings.method])}, ${result.rows.length-1} pasos.</p></div>
       <div class="output-card"><h3>Primeros pasos del método</h3>
-      <p>Para sistemas, cada pendiente es un vector (kᵧ,k𝓏). Las actualizaciones se realizan simultáneamente para y y z.</p>
+      <p>Para sistemas, cada pendiente es un vector \\((k_y,k_z)\\). Las actualizaciones se realizan simultáneamente para \\(y\\) y \\(z\\).</p>
       <div class="step-list">${odeSlopeBlocks(result.rows,settings.method,true)}</div></div>
       <div class="output-card"><h3>Tabla de resultados</h3>${odeRowTable(result.rows,true)}</div>
       <div class="output-card"><h3>Gráficas de las variables</h3>${odeLegend(['y(x)','z(x)'])}</div>`;
@@ -176,10 +176,10 @@ function runConvergence(){
       <p>Referencia numérica RK4 refinada: <strong>${odeFmt(finalReference,10)}</strong>.</p>
       <p class="hint">Error absoluto frente a una referencia de alta resolución: sirve para comparar métodos, pero no demuestra error exacto.</p></div>
       <div class="output-card"><h3>¿Qué pasa cuando se reduce h?</h3><div class="table-wrap"><table><thead>${header}</thead><tbody>${body}</tbody></table></div>
-      <p class="hint">Compara h, h/2 y h/4: normalmente la aproximación mejora cuando disminuye el paso, si se cumplen las hipótesis del problema.</p></div>
-      <div class="output-card"><h3>Estabilidad de la linealización local</h3><p>Se estima λ ≈ ∂f/∂y alrededor del dato inicial y se evalúa el factor R(hλ). Para la ecuación lineal de prueba con λ negativo, |R| ≤ 1 es la condición de estabilidad absoluta para ese paso.</p>
+      <p class="hint">Compara \\(h\\), \\(h/2\\) y \\(h/4\\): la aproximación suele mejorar al disminuir el paso, si se cumplen las hipótesis del problema.</p></div>
+      <div class="output-card"><h3>Estabilidad de la linealización local</h3><p>Se estima \\(\\lambda \\approx \\partial f/\\partial y\\) alrededor del dato inicial y se evalúa el factor \\(R(h\\lambda)\\). Para \\(\\lambda<0\\), se comprueba la condición \\(|R(h\\lambda)|\\leq1\\).</p>
       <div class="table-wrap"><table><thead><tr><th>Método</th><th>λ estimada</th><th>hλ</th><th>|R(hλ)|</th><th>Condición |R|</th></tr></thead><tbody>${stabilityBody}</tbody></table></div>
-      <p class="hint"><strong>Importante:</strong> este indicador local no garantiza la estabilidad global de ecuaciones no lineales. Si λ ≥ 0, crecimiento de la solución puede ser natural, no un fallo del método.</p></div>
+      <p class="hint"><strong>Importante:</strong> este indicador local no garantiza la estabilidad global de ecuaciones no lineales. Si \\(\\lambda\\geq 0\\), el crecimiento de la solución puede ser natural y no necesariamente un fallo del método.</p></div>
       <div class="output-card"><h3>Comparación gráfica con paso h</h3>${odeLegend(Object.values(NumericalODE.METHODS))}</div>`;
     odeSeriesGraph('convCanvas',results.map(r=>({points:r.runs[0].rows.map(v=>({x:v.x,y:v.y}))})));
     odeRecent.convergence={headers:['metodo','h','valor_final','error_vs_referencia'],rows:results.flatMap(r=>r.runs.map(s=>[NumericalODE.METHODS[r.method],s.h,s.final,Math.abs(s.final-finalReference)]))};
